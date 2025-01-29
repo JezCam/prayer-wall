@@ -1,6 +1,12 @@
+'use server'
+
 import { unauthenticatedAction } from '@/lib/safe-action'
-import { sharePrayerRequestUseCase } from '@/use-cases/prayer-requests'
+import {
+  prayForRequestUseCase,
+  sharePrayerRequestUseCase,
+} from '@/use-cases/prayer-requests'
 import { z } from 'zod'
+import { revalidatePath } from 'next/cache'
 
 export const sharePrayerRequestAction = unauthenticatedAction
   .createServerAction()
@@ -9,8 +15,8 @@ export const sharePrayerRequestAction = unauthenticatedAction
       name: z.string(),
       email: z.string().email(),
       phone: z.string().min(10),
-      shareInstructions: z.string(),
-      prayerRequest: z.string().max(400),
+      share_instructions: z.string(),
+      prayer_request: z.string().max(400),
     }),
   )
   .handler(async ({ input }) => {
@@ -18,8 +24,25 @@ export const sharePrayerRequestAction = unauthenticatedAction
       input.name,
       input.email,
       input.phone,
-      input.shareInstructions,
-      input.prayerRequest,
+      input.share_instructions,
+      input.prayer_request,
     )
-    return
+    // Add a delay (e.g., 2 seconds)
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    revalidatePath('')
+  })
+
+export const prayForRequestAction = unauthenticatedAction
+  .createServerAction()
+  .input(
+    z.object({
+      id: z.number(),
+      num_times_prayed: z.number(),
+    }),
+  )
+  .handler(async ({ input }) => {
+    prayForRequestUseCase(input.id, input.num_times_prayed)
+    // Add a delay (e.g., 2 seconds)
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    revalidatePath('')
   })
