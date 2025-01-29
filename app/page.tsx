@@ -32,8 +32,9 @@ export default async function Home({
           <SharePrayerRequestForm />
         </div>
         <div className='flex flex-col gap-6 w-[35rem]'>
-          {prayerRequests.map(prayerRequest => (
+          {prayerRequests.map((prayerRequest, index) => (
             <PrayerRequest
+              key={index}
               id={prayerRequest.id}
               name={prayerRequest.title.rendered}
               prayerRequest={prayerRequest.content.rendered}

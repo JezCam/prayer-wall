@@ -10,6 +10,7 @@ import { z } from 'zod'
 import { LoaderButton } from './loader-button'
 
 import he from 'he'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const praySchema = z.object({
   id: z.number(),
@@ -25,7 +26,7 @@ export default function PrayerRequest(props: {
   const { toast } = useToast()
   const [prayed, setPrayed] = useState<boolean>(false)
 
-  const { execute, isPending, error } = useServerAction(prayForRequestAction, {
+  const { execute, isPending } = useServerAction(prayForRequestAction, {
     onError({ err }) {
       toast({
         title: 'Something went wrong, please try again.',
@@ -43,6 +44,7 @@ export default function PrayerRequest(props: {
   })
 
   const form = useForm<z.infer<typeof praySchema>>({
+    resolver: zodResolver(praySchema),
     defaultValues: { id: props.id, num_times_prayed: props.num_times_prayed },
   })
 
