@@ -16,9 +16,9 @@ export default async function Home({
     await getPrayerRequestsUseCase(page, perPage)
 
   return (
-    <div className='w-screen min-h-screen flex justify-center p-24'>
-      <div className='flex gap-14'>
-        <div className='flex flex-col gap-6 w-[30rem]'>
+    <div className='w-screen min-h-screen flex justify-center px-3 py-6 lg:py-24 lg:px-12'>
+      <div className='flex flex-col items-start lg:flex-row gap-14 max-w-full'>
+        <div className='flex flex-col gap-6 w-full max-w-[30rem]'>
           <div className='flex justify-between items-center w-full'>
             <h1 className='font-bold'>Prayer Wall</h1>
             <ModeToggle />
@@ -31,7 +31,7 @@ export default async function Home({
           </p>
           <SharePrayerRequestForm />
         </div>
-        <div className='flex flex-col gap-6 w-[35rem]'>
+        <div className='flex flex-col gap-6 w-full max-w-[30rem]'>
           {prayerRequests.map((prayerRequest, index) => (
             <PrayerRequest
               key={index}

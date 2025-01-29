@@ -59,7 +59,7 @@ export default function OriginPagination({
   )
 
   return (
-    <div className='flex items-center justify-between gap-3 w-full'>
+    <div className='flex flex-col sm:flex-row items-center justify-between gap-3 w-full'>
       {/* Pagination */}
       <div>
         <Pagination>
@@ -101,16 +101,21 @@ export default function OriginPagination({
             )}
 
             {/* Page number links */}
-            {pages.map(page => (
-              <PaginationItem key={page}>
-                <PaginationLink
-                  href={`?page=${page}`}
-                  isActive={page === currentPage}
-                >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
+            {pages
+              .slice(
+                currentPage === 1 ? 0 : currentPage - 2,
+                currentPage === 1 ? 3 : Math.min(totalPages, currentPage + 1),
+              )
+              .map(page => (
+                <PaginationItem key={page}>
+                  <PaginationLink
+                    href={`?page=${page}`}
+                    isActive={page === currentPage}
+                  >
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
 
             {/* Right ellipsis (...) */}
             {showRightEllipsis && (

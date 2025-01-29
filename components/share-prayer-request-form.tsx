@@ -101,8 +101,11 @@ export default function SharePrayerRequestForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-        <div className='flex space-x-3'>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className='space-y-3 md:space-y-6'
+      >
+        <div className='flex flex-col sm:flex-row gap-3'>
           <FormField
             control={form.control}
             name='name'
@@ -140,7 +143,7 @@ export default function SharePrayerRequestForm() {
             )}
           />
         </div>
-        <div className='flex space-x-3'>
+        <div className='flex flex-col sm:flex-row gap-3'>
           <FormField
             control={form.control}
             name='phone'

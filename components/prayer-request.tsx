@@ -54,7 +54,7 @@ export default function PrayerRequest(props: {
 
   return (
     <div className='bg-muted p-4 rounded-md flex flex-col gap-3'>
-      <div className='flex justify-between items-center'>
+      <div className='flex justify-between items-center gap-3'>
         <h2 className='font-semibold'>{props.name}</h2>
         <div className='flex gap-2 items-center '>
           {props.num_times_prayed > 0 ? (
