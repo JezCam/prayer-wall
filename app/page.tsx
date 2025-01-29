@@ -40,7 +40,9 @@ export default async function Home({
               num_times_prayed={prayerRequest.acf.num_times_prayed}
             />
           ))}
-          <OriginPagination currentPage={page} totalPages={totalPages} />
+          {totalPrayerRequests > 0 && (
+            <OriginPagination currentPage={page} totalPages={totalPages} />
+          )}
         </div>
       </div>
     </div>

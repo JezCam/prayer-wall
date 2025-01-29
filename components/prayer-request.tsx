@@ -9,6 +9,8 @@ import { prayForRequestAction } from '@/app/actions'
 import { z } from 'zod'
 import { LoaderButton } from './loader-button'
 
+import he from 'he'
+
 const praySchema = z.object({
   id: z.number(),
   num_times_prayed: z.number(),
@@ -76,7 +78,7 @@ export default function PrayerRequest(props: {
           </Form>
         </div>
       </div>
-      <p className='text-sm'>{props.prayerRequest.slice(3, -5)}</p>
+      <p className='text-sm'>{he.decode(props.prayerRequest.slice(3, -5))}</p>
     </div>
   )
 }
