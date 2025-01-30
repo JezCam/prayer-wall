@@ -228,7 +228,7 @@ export default function SharePrayerRequestForm() {
 
         <LoaderButton
           isLoading={isPending}
-          className='w-full !mt-8 font-semibold'
+          className='w-full !mt-4 font-semibold'
           type='submit'
           size='lg'
           onClick={e => {
