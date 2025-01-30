@@ -42,7 +42,9 @@ export default async function Home({
           <SharePrayerRequestForm />
         </div>
         {/* Divider */}
-        <div className='h-[2px] w-full lg:h-full lg:w-[2px] bg-muted'></div>
+        <div className='px-6 lg:px-0 lg:py-6 h-[2px] w-full lg:h-full lg:w-[2px]'>
+          <div className='h-full w-full bg-muted rounded-full'></div>
+        </div>
         <div className='flex flex-col gap-3 w-full max-w-[30rem]'>
           {prayerRequests.map((prayerRequest, index) => (
             <PrayerRequest
