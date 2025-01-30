@@ -59,7 +59,7 @@ export default function OriginPagination({
   )
 
   return (
-    <div className='flex flex-col sm:flex-row items-center justify-between gap-3 w-full'>
+    <div className='flex flex-col sm:flex-row items-center justify-between gap-6 w-full'>
       {/* Pagination */}
       <div>
         <Pagination>
@@ -68,9 +68,7 @@ export default function OriginPagination({
             <PaginationItem>
               <PaginationLink
                 className='aria-disabled:pointer-events-none aria-disabled:opacity-50'
-                href={
-                  currentPage === 1 ? undefined : `?page=${currentPage - 1}`
-                }
+                href={currentPage === 1 ? undefined : '?page=1'}
                 aria-label='Go to first page'
                 aria-disabled={currentPage === 1 ? true : undefined}
                 role={currentPage === 1 ? 'link' : undefined}
@@ -169,7 +167,7 @@ export default function OriginPagination({
         >
           <SelectTrigger
             id='results-per-page'
-            className='w-fit whitespace-nowrap'
+            className='w-full whitespace-nowrap'
           >
             <SelectValue placeholder='Select number of results' />
           </SelectTrigger>

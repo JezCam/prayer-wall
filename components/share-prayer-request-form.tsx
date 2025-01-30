@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Form,
   FormControl,
@@ -62,6 +62,7 @@ const prayerRequestSchema = z.object({
 })
 
 export default function SharePrayerRequestForm() {
+  const [open, setOpen] = useState<boolean>(true)
   const { toast } = useToast()
 
   const { execute, isPending, error } = useServerAction(
@@ -101,112 +102,122 @@ export default function SharePrayerRequestForm() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className='space-y-3 md:space-y-6'
-      >
-        <div className='flex flex-col sm:flex-row gap-3'>
-          <FormField
-            control={form.control}
-            name='name'
-            render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormLabel>Your name</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    className='w-full'
-                    placeholder='Enter your name'
-                    type='text'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='email'
-            render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormLabel>Your email</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    className='w-full'
-                    placeholder='Enter your email'
-                    type='email'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className='flex flex-col sm:flex-row gap-3'>
-          <FormField
-            control={form.control}
-            name='phone'
-            render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormLabel>Your phone</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    className='w-full'
-                    placeholder='Enter your phone'
-                    type='text'
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='share_instructions'
-            render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormLabel>Please...</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div
+          className='space-y-3 md:space-y-6 overflow-clip [transition:height_0.4s_ease-in-out] p-1'
+          style={{ height: open ? 'auto' : 0 }}
+        >
+          <div className='flex flex-col sm:flex-row gap-3'>
+            <FormField
+              control={form.control}
+              name='name'
+              render={({ field }) => (
+                <FormItem className='w-full'>
+                  <FormLabel>Your name</FormLabel>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
+                    <Input
+                      {...field}
+                      className='w-full'
+                      placeholder='Enter your name'
+                      type='text'
+                    />
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value='share'>Share this</SelectItem>
-                    <SelectItem value='anonymous'>
-                      Share this anonymously
-                    </SelectItem>
-                    <SelectItem value='nothing'>DO NOT share this</SelectItem>
-                  </SelectContent>
-                </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='email'
+              render={({ field }) => (
+                <FormItem className='w-full'>
+                  <FormLabel>Your email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className='w-full'
+                      placeholder='Enter your email'
+                      type='email'
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className='flex flex-col sm:flex-row gap-3'>
+            <FormField
+              control={form.control}
+              name='phone'
+              render={({ field }) => (
+                <FormItem className='w-full'>
+                  <FormLabel>Your phone</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className='w-full'
+                      placeholder='Enter your phone'
+                      type='text'
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='share_instructions'
+              render={({ field }) => (
+                <FormItem className='w-full'>
+                  <FormLabel>Please...</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value='share'>Share this</SelectItem>
+                      <SelectItem value='anonymous'>
+                        Share this anonymously
+                      </SelectItem>
+                      <SelectItem value='nothing'>DO NOT share this</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormField
+            control={form.control}
+            name='prayer_request'
+            render={({ field }) => (
+              <FormItem className='w-full'>
+                <FormLabel>Your prayer request</FormLabel>
+                <FormControl>
+                  <>
+                    <Textarea
+                      {...field}
+                      className='w-full'
+                      placeholder='Enter your prayer request'
+                      rows={4}
+                      maxLength={400}
+                    />
+                    <span className='text-xs text-muted-foreground ml-2'>
+                      {400 - form.getValues().prayer_request.length} characters
+                      remaining
+                    </span>
+                  </>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <FormField
-          control={form.control}
-          name='prayer_request'
-          render={({ field }) => (
-            <FormItem className='w-full'>
-              <FormLabel>Your prayer request</FormLabel>
-              <FormControl>
-                <Textarea
-                  {...field}
-                  className='w-full'
-                  placeholder='Enter your prayer request'
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         {error && (
           <Alert variant='destructive'>
             <Terminal className='h-4 w-4' />
@@ -217,8 +228,16 @@ export default function SharePrayerRequestForm() {
 
         <LoaderButton
           isLoading={isPending}
-          className='w-full !mt-8'
+          className='w-full !mt-8 font-semibold'
           type='submit'
+          size='lg'
+          onClick={e => {
+            if (!open) {
+              e.preventDefault()
+              e.stopPropagation()
+            }
+            setOpen(true)
+          }}
         >
           Share your prayer request
         </LoaderButton>

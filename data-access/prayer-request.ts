@@ -10,7 +10,7 @@ export async function createPrayerRequest(
   prayer_request: string,
 ) {
   const postData = {
-    title: name,
+    title: share_instructions === 'anonymous' ? 'Anonymous' : name,
     content: prayer_request,
     status: share_instructions === 'nothing' ? 'draft' : 'publish', // Publish immediately or 'draft' for draft
     acf: {
