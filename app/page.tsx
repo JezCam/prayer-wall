@@ -28,8 +28,8 @@ export default async function Home({
             own first name only!
             <br></br>
             <br></br>
-            If you'd like to include others in your prayer requests, make sure
-            you use their initials only 🤗
+            If you&apos;d like to include others in your prayer requests, make
+            sure you use their initials only 🤗
           </p>
           <p className='text-sm bg-muted/60 text-muted-foreground p-4 rounded-xl'>
             You may add your prayer request to our prayer wall using the form
