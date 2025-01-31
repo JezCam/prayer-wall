@@ -97,7 +97,7 @@ export default function PrayerRequestCard(props: {
         {he.decode(
           props.prayerRequest.pending
             ? prayerRequest
-            : prayerRequest.slice(3, -5),
+            : prayerRequest.replace(/(<([^>]+)>)/gi, ''), // Remove HTML tags
         )}
       </p>
     </div>
