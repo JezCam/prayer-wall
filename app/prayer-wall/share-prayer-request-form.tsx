@@ -12,7 +12,7 @@ import {
 import { z } from 'zod'
 import { useToast } from '@/hooks/use-toast'
 import { useServerAction } from 'zsa-react'
-import { sharePrayerRequestAction } from '@/app/actions'
+import { sharePrayerRequestAction } from '@/app/prayer-wall/actions'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { PrayerRequest } from '@/use-cases/types'
 
 const prayerRequestSchema = z.object({
   name: z
@@ -61,7 +62,11 @@ const prayerRequestSchema = z.object({
     .max(400),
 })
 
-export default function SharePrayerRequestForm() {
+export default function SharePrayerRequestForm(props: {
+  onShare: (data: PrayerRequest) => void
+  onSuccess: (data: PrayerRequest) => void
+  onError: () => void
+}) {
   const [open, setOpen] = useState<boolean>(true)
   const { toast } = useToast()
 
@@ -75,12 +80,13 @@ export default function SharePrayerRequestForm() {
           variant: 'destructive',
         })
       },
-      onSuccess() {
+      onSuccess({ data }) {
         toast({
           title: 'Prayer request shared',
           description: 'Thank you for sharing your prayer request!',
         })
         form.reset()
+        props.onSuccess(data)
       },
     },
   )
@@ -97,6 +103,23 @@ export default function SharePrayerRequestForm() {
   })
 
   function onSubmit(values: z.infer<typeof prayerRequestSchema>) {
+    const data: PrayerRequest = {
+      id: Date.now(), // using the date as an optimistic id
+      title: {
+        rendered: values.name,
+      },
+      content: {
+        rendered: values.prayer_request,
+      },
+      acf: {
+        email: values.email,
+        phone: values.phone,
+        num_times_prayed: 0,
+        share_instructions: values.share_instructions,
+      },
+      pending: true,
+    }
+    props.onShare(data)
     execute(values)
   }
 

@@ -1,3 +1,5 @@
+import { PrayerRequest } from '@/use-cases/types'
+
 const wpApiUrl = process.env.WORDPRESS_URL as string
 const appUsername = process.env.WORDPRESS_APP_USERNAME as string
 const appPassword = process.env.WORDPRESS_APP_PASSWORD as string
@@ -38,22 +40,6 @@ export async function createPrayerRequest(
   return data // Return the created post data
 }
 
-interface PrayerRequest {
-  id: number
-  title: {
-    rendered: string
-  }
-  content: {
-    rendered: string
-  }
-  acf: {
-    email: string
-    phone: string
-    share_instructions: string
-    num_times_prayed: number
-  }
-}
-
 export async function getPrayerRequests(
   page: number,
   perPage: number,
@@ -86,24 +72,24 @@ export async function getPrayerRequests(
   }
 }
 
-export async function prayForRequest(id: number, num_times_prayed: number) {
-  const postData = {
-    acf: {
-      num_times_prayed: num_times_prayed + 1,
-    },
-  }
-
+export async function updatePrayerRequest(
+  id: number,
+  data: Partial<PrayerRequest>,
+): Promise<PrayerRequest> {
   const response = await fetch(wpApiUrl + `/${id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Basic ${Buffer.from(`${appUsername}:${appPassword}`).toString('base64')}`,
     },
-    body: JSON.stringify(postData),
+    body: JSON.stringify(data),
   })
 
   if (!response.ok) {
     const errorData = await response.json()
     throw new Error(errorData.message || 'Failed to create prayer request')
   }
+
+  const prayerRequest = await response.json()
+  return prayerRequest
 }

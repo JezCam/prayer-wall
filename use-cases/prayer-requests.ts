@@ -1,8 +1,9 @@
 import {
   createPrayerRequest,
   getPrayerRequests,
-  prayForRequest,
+  updatePrayerRequest,
 } from '@/data-access/prayer-request'
+import { PrayerRequest } from './types'
 
 export async function sharePrayerRequestUseCase(
   name: string,
@@ -10,8 +11,14 @@ export async function sharePrayerRequestUseCase(
   phone: string,
   share_instructions: string,
   prayer_request: string,
-) {
-  createPrayerRequest(name, email, phone, share_instructions, prayer_request)
+): Promise<PrayerRequest> {
+  return await createPrayerRequest(
+    name,
+    email,
+    phone,
+    share_instructions,
+    prayer_request,
+  )
 }
 
 export async function getPrayerRequestsUseCase(page: number, perPage: number) {
@@ -21,6 +28,11 @@ export async function getPrayerRequestsUseCase(page: number, perPage: number) {
 export async function prayForRequestUseCase(
   id: number,
   num_times_prayed: number,
-) {
-  prayForRequest(id, num_times_prayed)
+): Promise<number> {
+  const data: Partial<PrayerRequest> = {
+    acf: {
+      num_times_prayed,
+    },
+  }
+  return (await updatePrayerRequest(id, data)).acf.num_times_prayed ?? 0
 }

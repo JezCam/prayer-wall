@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 import './globals.css'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from '@/components/ui/toaster'
+import { ModeToggle } from '@/components/mode-toggle'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -36,7 +37,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <ModeToggle />
+          <div className='w-screen min-h-screen flex justify-center px-3 py-6 lg:py-24 lg:px-12'>
+            {children}
+          </div>
+
           <Toaster />
         </ThemeProvider>
       </body>

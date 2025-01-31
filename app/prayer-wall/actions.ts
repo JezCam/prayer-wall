@@ -5,8 +5,8 @@ import {
   prayForRequestUseCase,
   sharePrayerRequestUseCase,
 } from '@/use-cases/prayer-requests'
+import { PrayerRequest } from '@/use-cases/types'
 import { z } from 'zod'
-import { revalidatePath } from 'next/cache'
 
 export const sharePrayerRequestAction = unauthenticatedAction
   .createServerAction()
@@ -19,17 +19,14 @@ export const sharePrayerRequestAction = unauthenticatedAction
       prayer_request: z.string().max(400),
     }),
   )
-  .handler(async ({ input }) => {
-    sharePrayerRequestUseCase(
+  .handler(async ({ input }): Promise<PrayerRequest> => {
+    return await sharePrayerRequestUseCase(
       input.name,
       input.email,
       input.phone,
       input.share_instructions,
       input.prayer_request,
     )
-    // Add a delay (e.g., 2 seconds)
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    revalidatePath('')
   })
 
 export const prayForRequestAction = unauthenticatedAction
@@ -40,9 +37,6 @@ export const prayForRequestAction = unauthenticatedAction
       num_times_prayed: z.number(),
     }),
   )
-  .handler(async ({ input }) => {
-    prayForRequestUseCase(input.id, input.num_times_prayed)
-    // Add a delay (e.g., 2 seconds)
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    revalidatePath('')
+  .handler(async ({ input }): Promise<number> => {
+    return await prayForRequestUseCase(input.id, input.num_times_prayed)
   })
