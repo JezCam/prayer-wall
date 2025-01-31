@@ -46,7 +46,6 @@ export default function PrayerRequestCard(props: {
         description: `Thank you for praying for ${name}!`,
       })
       setPrayed(true)
-      console.log(data)
     },
   })
 
