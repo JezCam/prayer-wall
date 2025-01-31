@@ -65,7 +65,6 @@ const prayerRequestSchema = z.object({
 export default function SharePrayerRequestForm(props: {
   onShare: (data: PrayerRequest) => void
   onSuccess: (data: PrayerRequest) => void
-  onError: () => void
 }) {
   const [open, setOpen] = useState<boolean>(true)
   const { toast } = useToast()

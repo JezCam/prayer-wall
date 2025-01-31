@@ -86,7 +86,7 @@ export default function PrayerRequestCard(props: {
                 variant='outline'
                 isLoading={isPending}
                 type='submit'
-                disabled={prayed}
+                disabled={prayed || isPending}
               >
                 {prayed ? 'Thanks for praying!' : 'I prayed for this'}
               </LoaderButton>

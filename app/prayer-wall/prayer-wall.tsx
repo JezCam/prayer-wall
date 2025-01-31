@@ -24,7 +24,6 @@ export default function PrayerWall(props: {
   const onSuccess = (data: PrayerRequest) => {
     setPrayerRequests(prev => [data, ...prev.slice(0, -1)])
   }
-  const onError = () => {}
 
   return (
     <>
@@ -47,11 +46,7 @@ export default function PrayerWall(props: {
           requests as you like!
         </p>
 
-        <SharePrayerRequestForm
-          onShare={onShare}
-          onSuccess={onSuccess}
-          onError={onError}
-        />
+        <SharePrayerRequestForm onShare={onShare} onSuccess={onSuccess} />
       </div>
       {/* Divider */}
       <div className='px-6 lg:px-0 lg:py-6 h-[2px] w-full lg:h-full lg:w-[2px]'>
