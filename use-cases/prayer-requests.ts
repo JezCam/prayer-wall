@@ -28,11 +28,11 @@ export async function getPrayerRequestsUseCase(page: number, perPage: number) {
 export async function prayForRequestUseCase(
   id: number,
   num_times_prayed: number,
-): Promise<number> {
+) {
   const data: Partial<PrayerRequest> = {
     acf: {
       num_times_prayed,
     },
   }
-  return (await updatePrayerRequest(id, data)).acf.num_times_prayed ?? 0
+  updatePrayerRequest(id, data)
 }

@@ -40,7 +40,7 @@ export default function PrayerRequestCard(props: {
       // roll back state change
       setNumTimesPrayed(prev => prev - 1)
     },
-    onSuccess({ data }) {
+    onSuccess() {
       toast({
         title: 'Prayer received',
         description: `Thank you for praying for ${name}!`,

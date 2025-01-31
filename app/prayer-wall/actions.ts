@@ -37,6 +37,6 @@ export const prayForRequestAction = unauthenticatedAction
       num_times_prayed: z.number(),
     }),
   )
-  .handler(async ({ input }): Promise<number> => {
-    return await prayForRequestUseCase(input.id, input.num_times_prayed)
+  .handler(async ({ input }) => {
+    prayForRequestUseCase(input.id, input.num_times_prayed)
   })
